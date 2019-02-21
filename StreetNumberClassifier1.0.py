@@ -17,7 +17,6 @@ from keras import backend as K
 K.tensorflow_backend._get_available_gpus()
 from matplotlib.pyplot import imshow
 import numpy as np
-
 import scipy.io
 import matplotlib.pyplot as plt
 from numpy import random
@@ -35,21 +34,57 @@ def generateGray(X):
     return ans
 
 
+def preprocess(data):
+    x = data['X']
+    # extract the images and labels from the dictionary object
+    # X[0] : 32 ,number of pixels in x direction
+    # X[1] : 32 ,number of pixels in y direction
+    # X[2] : 3  RGB
+    # X[3] : total input eg: 73257
+
+    xPixels=x.shape[0]
+    yPixels=x.shape[1]
+    colors=x.shape[2]
+    inputCount=x.shape[3]
+    
+    print(x.shape)
+    y = data['y']
+    # view an image (e.g. 25) and print its corresponding label
+    img_index = 1123
+    plt.imshow(x[:,:,:,img_index])
+    plt.show()
+    
+    # x shape: 73257x32x32
+    x=generateGray(x)
+    print(x.shape) 
+    #x shape   73257x(32x32) = 73257x1024
+    x=x.reshape(inputCount,xPixels*yPixels)
+    #print(X.shape)
+    #i do not understand why i must add plt.get_cmap('gray') to make it looks like grayscale
+    #if plt.get_cmap('gray') is removed, you can still see colors.
+    imshow(x[img_index].reshape(32,32),cmap = plt.get_cmap('gray'))
+    plt.show()
+    #astype函数用于array中数值类型转换
+    x = x.astype('float32')
+    #數字越接近1,表示該pixel被塗得越深
+    x /= 255
+    #use 11 rather than 10 here since 0 is represented by 10 instead of 0
+    # y: 73257 x 11
+    y = keras.utils.to_categorical(y, num_classes=11) 
+    return x, y
+
+
 #load our dataset
 train_data = scipy.io.loadmat('train_32x32.mat')
-# extract the images and labels from the dictionary object
-X = train_data['X']
-print(X.shape)
-y = train_data['y']
-# view an image (e.g. 25) and print its corresponding label
-img_index = 1123
-plt.imshow(X[:,:,:,img_index])
-plt.show()
-# gray shape: 73257x32x32
-gray=generateGray(X)
-print(gray.shape) 
+test_data  = scipy.io.loadmat('test_32x32.mat')
 
-#i do not understand why i must add plt.get_cmap('gray') to make it looks like grayscale
-#if plt.get_cmap('gray') is removed, you can still see colors.
-imshow(gray[img_index],cmap = plt.get_cmap('gray'))
+#x_train : 73257x1024 , y_train : 73257 x 11
+x_train, y_train = preprocess(train_data)
+x_test, y_test =  preprocess(test_data)
+
+
+
+
+
+
 

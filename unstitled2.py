@@ -20,7 +20,7 @@ print("before:",x_train.shape)
 x_train = x_train.reshape(60000, 784)
 x_test = x_test.reshape(10000, 784)
 print("after:",x_train.shape)
-
+print(y_train[0])
 #astype函数用于array中数值类型转换
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
