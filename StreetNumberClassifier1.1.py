@@ -14,6 +14,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, LeakyReLU, Conv2D
 from keras.optimizers import RMSprop
 from keras import backend as K
+from keras.optimizers import SGD
 K.tensorflow_backend._get_available_gpus()
 from matplotlib.pyplot import imshow
 import numpy as np
@@ -47,23 +48,23 @@ def preprocess(data):
     colors=x.shape[2]
     inputCount=x.shape[3]
     
-    print(x.shape)
+    
     y = data['y']
     # view an image (e.g. 25) and print its corresponding label
     img_index = 1123
-    plt.imshow(x[:,:,:,img_index])
-    plt.show()
+    #plt.imshow(x[:,:,:,img_index])
+    #plt.show()
     
     # x shape: 73257x32x32
     x=generateGray(x)
-    print(x.shape) 
+    
     #x shape   73257x(32x32) = 73257x1024
     x=x.reshape(inputCount,xPixels*yPixels)
     #print(X.shape)
     #i do not understand why i must add plt.get_cmap('gray') to make it looks like grayscale
     #if plt.get_cmap('gray') is removed, you can still see colors.
-    imshow(x[img_index].reshape(32,32),cmap = plt.get_cmap('gray'))
-    plt.show()
+    #imshow(x[img_index].reshape(32,32),cmap = plt.get_cmap('gray'))
+    #plt.show()
     #astype函数用于array中数值类型转换
     x = x.astype('float32')
     #數字越接近1,表示該pixel被塗得越深
@@ -71,6 +72,11 @@ def preprocess(data):
     #use 11 rather than 10 here since 0 is represented by 10 instead of 0
     # y: 73257 x 11
     y = keras.utils.to_categorical(y, num_classes=11) 
+    print("before", y.shape)
+    #remove first column
+    y=y[:,1:]
+    print(x.shape) 
+    print(y.shape)
     return x, y
 
 
@@ -81,6 +87,30 @@ test_data  = scipy.io.loadmat('test_32x32.mat')
 #x_train : 73257x1024 , y_train : 73257 x 11
 x_train, y_train = preprocess(train_data)
 x_test, y_test =  preprocess(test_data)
+imshow(x_test[4].reshape(32,32))
+plt.show()
+print (y_test[4])
+#training
+
+model=Sequential()
+model.add(Dense(input_dim=32*32,units=633,activation='relu'))
+#training set的performance不大好,所以先不加dropout
+#model.add(Dropout(0.5))
+model.add(Dense(units=633,activation='relu'))
+model.add(Dense(units=633,activation='relu'))
+model.add(Dense(units=633,activation='sigmoid'))
+model.add(Dense(units=633,activation='sigmoid'))
+model.add(Dense(units=10,activation='softmax'))
+sgd = SGD(lr=0.1)
+
+#用sgd,sigmoid performance很差,  換成relu,adam後train的速度有變快
+model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+model.fit(x_train,y_train,batch_size=500,epochs=9)
+trainingSetresult =model.evaluate(x_train,y_train)
+testingSetresult =model.evaluate(x_test,y_test)
+print(trainingSetresult)
+print(testingSetresult)
+#print("Test accuracy: ", result[1])
 
 
 
