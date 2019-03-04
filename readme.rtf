@@ -1,0 +1,32 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset136 PingFangTC-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 utilities.py: 
+\f1 \'b8\'cc\'ad\'b1\'aa\'ba
+\f0 preprocess function
+\f1 \'af\'e0\'a7\'e2\'ad\'ec\'a5\'bb\'ba\'f4\'af\'b8\'a4\'57\'aa\'ba
+\f0 input 32x32x3xn 
+\f1 \'c2\'e0\'a6\'a8 nx1024, 1024\'a5\'4e\'aa\'ed\'a8\'43\'ad\'d3\'a6\'6232x32\'a4\'57\'aa\'bapixel,\'ad\'c8\'a4\'b6\'a9\'f30~1,\'b6\'56\'b1\'b5\'aa\'f11\'a5\'4e\'aa\'ed\'b8\'d3\'ae\'e6\'b3\'51\'b6\'ee\'aa\'ba\'b6\'56\'b6\'c2\
+PCA.py: call 
+\f0 utilities.py
+\f1 \'b1\'4e\'ba\'f4\'af\'b8\'a4\'57\'aa\'ba
+\f0 input 32x32x3xn 
+\f1 \'c2\'e0\'a6\'a8 nx1024, \'a6\'41\'a7\'e2 nx1024 \'c2\'e0\'a6\'a8 nx80(dimension reduction), 80\'ac\'4f\'ae\'da\'be\'da\'a4\'e8\'ae\'74\'b8\'d1\'c4\'c0\'b2\'76\'ba\'e2\'aa\'ba\
+StreetNumberClassifier.py \'a5\'ceNN\'b0\'b5\'aa\'ba\'b0\'56\'bd\'6d\'bc\'d2\'ab\'ac\
+\
+train_32x32.mat \'ba\'f4\'af\'b8\'b4\'a3\'a8\'d1\'aa\'ba train data 32x32x3xn\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 test_32x32.mat \'ba\'f4\'af\'b8\'b4\'a3\'a8\'d1\'aa\'ba test data  32x32x3xn\
+\
+train_80_pca.mat \'b3\'51\'ad\'b0\'ba\'fb\'aa\'ba train dat  nx80\
+test_80_pca.mat \'b3\'51\'ad\'b0\'ba\'fb\'aa\'ba test dat  nx80\
+\
+\'ad\'6e\'b4\'a3\'a8\'fadata\'aa\'ba\'b8\'dc\'b3\'a3\'ac\'4f\
+\
+train_data = sio.loadmat('train_80_pca.mat')\
+x_train=bdict[\'a1\'a5X\'a1\'a6]\
+y_train=bdict[\'a1\'a5y\'a1\'a6]}
