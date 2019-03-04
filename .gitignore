@@ -2,3 +2,4 @@ train_32x32.mat
 test_32x32.mat
 train_80_pca.mat
 test_80_pca.mat
+x_train.mat
