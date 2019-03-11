@@ -29,7 +29,7 @@ def preprocess(data):
     # X[3] : total input eg: 73257
 
     xPixels=x.shape[0]
-    yPixels=x.shape[1]
+ｕ    yPixels=x.shape[1]
     inputCount=x.shape[3]
     
     
